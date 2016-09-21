@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Video.js BIF</title>
+  <meta name="description" content="Video.js plugin for supporting BIF.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
+</head>
+
+<body>
+  <video id="player" class="video-js vjs-default-skin" width="600" height="250" controls>
+    <source src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4" type="video/mp4" />
+
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a web browser that
+      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+  </video>
+
+  <script src="node_modules/video.js/dist/video.js"></script>
+  <script src="videojs.bif.js"></script>
+
+  <script>
+    // initialize the plugin
+    videojs('player');
+  </script>
+</body>
+
+</html>
