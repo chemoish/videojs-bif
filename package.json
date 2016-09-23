@@ -29,6 +29,7 @@
   "homepage": "https://github.com/chemoish/videojs-bif#readme",
   "dependencies": {
     "jdataview": "^2.5.0",
+    "lodash": "^4.16.1",
     "video.js": "^5.11.6"
   },
   "devDependencies": {

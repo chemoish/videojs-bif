@@ -24,12 +24,91 @@
     </p>
   </video>
 
+  <p>
+    <label>
+      File: <input id="file" type="file" />
+    </label>
+  </p>
+
+  <p>
+    <label>
+      Frame Number: <input id="frame_number" min="0" type="number" />
+    </label>
+  </p>
+
+  <p>
+    <img id="frame" />
+  </p>
+
   <script src="node_modules/video.js/dist/video.js"></script>
   <script src="videojs.bif.js"></script>
 
   <script>
+    let bif;
+
+    const file = document.getElementById('file');
+    const frame = document.getElementById('frame');
+    const frameNumber = document.getElementById('frame_number');
+
+    file.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.addEventListener('load', (event) => {
+        videojs('player').ready(function () {
+          console.warn('bif initialized');
+
+          bif = this.bif({
+            data: event.target.result,
+
+            onMouseMove(event, { image, time }) {
+              frame.src = image;
+              frameNumber.value = time;
+            }
+          });
+        });
+      });
+
+      reader.readAsArrayBuffer(file);
+    });
+
+    frameNumber.addEventListener('change', (event) => {
+      if (!bif) {
+        return;
+      }
+
+      const time = event.target.value;
+
+      frame.src = bif.bifParser.getImageDataAtSecond(time, true);
+    });
+
     // initialize the plugin
-    videojs('player');
+    videojs('player').ready(function () {
+      const request = new XMLHttpRequest();
+
+      request.open('GET', 'http://cdn.media.dma.disney.go.com/packaged/THMBVID/45/7e8e0b37-9235-4cc1-bb93-d235f3fc4145_1474036862600_30k.biff', true);
+      request.responseType = 'arraybuffer';
+
+      request.onload = (event) => {
+        console.warn('bif initialized');
+
+        bif = this.bif({
+          data: event.target.response,
+
+          onMouseMove(event, { image, time }) {
+            frame.src = image;
+            frameNumber.value = time;
+          }
+        });
+      };
+
+      request.send(null);
+    });
   </script>
 </body>
 
