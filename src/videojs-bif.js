@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 
 /**
- * Register component
+ * Register component.
  */
 
 import bifMouseTimeDisplay from './component/bif-mouse-time-display';
@@ -11,7 +11,7 @@ import bifMouseTimeDisplay from './component/bif-mouse-time-display';
 videojs.registerComponent('BIFMouseTimeDisplay', bifMouseTimeDisplay);
 
 /**
- * Replace component implementation
+ * Replace component implementation.
  */
 
 const VjsSeekBar = videojs.getComponent('SeekBar');
@@ -23,7 +23,7 @@ const mouseTimeDisplayIndex = vjsSeekBarChildren.indexOf('mouseTimeDisplay');
 vjsSeekBarChildren.splice(mouseTimeDisplayIndex, 1, 'BIFMouseTimeDisplay');
 
 /**
- * Register plugin for easier component configurability
+ * Register plugin for easier component configurability.
  *
  * @param {Object} [options]
  * @param {ArrayBuffer} options.data
@@ -33,7 +33,6 @@ vjsSeekBarChildren.splice(mouseTimeDisplayIndex, 1, 'BIFMouseTimeDisplay');
  * @param {string} options.src
  * @param {boolean} options.wtf
  */
-
 videojs.plugin('bif', function bifPlugin(options = {}) {
   const { BIFMouseTimeDisplay } = this.player_.controlBar.progressControl.seekBar;
 

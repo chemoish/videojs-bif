@@ -38,7 +38,6 @@ const VjsMouseTimeDisplay = videojs.getComponent('MouseTimeDisplay');
  * @param {function} [options.template]
  * @param {boolean} [options.wtf=true]
  */
-
 export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
   /**
    * Create BIF element.
@@ -46,7 +45,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {HTMLElement} root
    * @returns {HTMLElement} BIFElement
    */
-
   static createBIFElement(root) {
     const BIFElement = document.createElement('div');
 
@@ -62,7 +60,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    *
    * @returns {HTMLElement} BIFImage
    */
-
   static createBIFImage() {
     const BIFImage = document.createElement('img');
 
@@ -76,7 +73,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    *
    * @returns {HTMLElement} BIFTime
    */
-
   static createBIFTime() {
     const BIFTime = document.createElement('span');
 
@@ -104,7 +100,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {function} [options.template]
    * @param {boolean} [options.wtf=true]
    */
-
   configure(options) {
     this.options_ = videojs.mergeOptions(defaults, this.options_, options);
 
@@ -123,7 +118,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {number} time in seconds
    * @returns {string} image base64 encoded image
    */
-
   getCurrentImageAtTime(time) {
     let image;
 
@@ -140,7 +134,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {Event} event
    * @returns {number} time
    */
-
   getCurrentTimeAtEvent(event) {
     const { seekBar } = this.player_.controlBar.progressControl;
 
@@ -157,7 +150,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    *
    * @param {Event} event
    */
-
   handleMouseMove(event) {
     super.handleMouseMove(event);
 
@@ -180,7 +172,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    *
    * @returns {boolean}
    */
-
   hasImages() {
     return !!this.BIFParser;
   }
@@ -197,7 +188,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {string} [options.url]
    * @param {boolean} [options.wtf=true]
    */
-
   render(options) {
     this.configure(options);
 
@@ -242,7 +232,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    *
    * @returns {HTMLElement} template
    */
-
   template() {
     const template = document.createElement('div');
 
@@ -264,7 +253,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {Object} options.image
    * @param {Object} options.time
    */
-
   updateTemplate({ image, time }) {
     if (image) {
       this.BIFImage.src = image;

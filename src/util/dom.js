@@ -16,7 +16,6 @@
  * @param {HTMLElement} element
  * @returns {Offset}
  */
-
 export function getElementPosition(element) {
   let elementPosition = {
     left: 0,
@@ -53,7 +52,6 @@ export function getElementPosition(element) {
  * @param {HTMLElement} element
  * @returns {Point}
  */
-
 export function getPointerPosition(event, element) {
   const elementPosition = getElementPosition(element);
 

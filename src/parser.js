@@ -30,7 +30,6 @@ export const MAGIC_NUMBER = new Uint8Array([
  *
  * @param {ArrayBuffer} arrayBuffer
  */
-
 export class BIFParser {
   constructor(arrayBuffer) {
     this.arrayBuffer = arrayBuffer;
@@ -65,7 +64,6 @@ export class BIFParser {
    *
    * @returns {Array} bifIndex
    */
-
   generateBIFIndex() {
     const bifIndex = [];
 
@@ -107,7 +105,6 @@ export class BIFParser {
    * @param {boolean} wtf if in `wtf` mode and doesn't follow BIF specification
    * @returns {string} imageData
    */
-
   getImageDataAtSecond(second, wtf = false) {
     // since frames are defined at an interval of BIF_TIMESTAMP_INTERVAL,
     // we need to convert the time into an appropriate frame number.
@@ -150,7 +147,6 @@ export class BIFParser {
    *
    * @returns {boolean} isValid
    */
-
   validate() {
     let isValid = true;
 
