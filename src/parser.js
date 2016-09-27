@@ -29,7 +29,6 @@ export const MAGIC_NUMBER = new Uint8Array([
  * Parsing and read BIF file format.
  *
  * @param {ArrayBuffer} arrayBuffer
- *
  */
 
 export class BIFParser {
@@ -149,6 +148,7 @@ export class BIFParser {
   /**
    * Validate the file identifier against the magic number.
    *
+   * @returns {boolean} isValid
    */
 
   validate() {

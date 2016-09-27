@@ -12,6 +12,42 @@
   <!-- Place favicon.ico in the root directory -->
 
   <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
+
+  <style>
+  .bif
+  {
+    bottom: 1.75em;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 10em;
+  }
+
+  .bif-image
+  {
+    display: block;
+    width: 100%;
+  }
+
+  .bif-time
+  {
+    background: black;
+    display: inline-block;
+    font-size: 0.6em;
+    line-height: normal;
+    overflow: hidden;
+    padding: 5px 10px;
+  }
+
+  .bif-image + .bif-time
+  {
+    display: block;
+  }
+
+  .vjs-mouse-display::after
+  {
+    display: none !important;
+  }
+  </style>
 </head>
 
 <body>
@@ -44,8 +80,6 @@
   <script src="videojs.bif.js"></script>
 
   <script>
-    let bif;
-
     const file = document.getElementById('file');
     const frame = document.getElementById('frame');
     const frameNumber = document.getElementById('frame_number');
@@ -61,15 +95,8 @@
 
       reader.addEventListener('load', (event) => {
         videojs('player').ready(function () {
-          console.warn('bif initialized');
-
-          bif = this.bif({
-            data: event.target.result,
-
-            onMouseMove(event, { image, time }) {
-              frame.src = image;
-              frameNumber.value = time;
-            }
+          this.bif({
+            data: event.target.response,
           });
         });
       });
@@ -78,36 +105,22 @@
     });
 
     frameNumber.addEventListener('change', (event) => {
-      if (!bif) {
+      const { BIFMouseTimeDisplay } = videojs('player').controlBar.progressControl.seekBar;
+
+      if (!BIFMouseTimeDisplay.BIFParser) {
         return;
       }
 
       const time = event.target.value;
 
-      frame.src = bif.bifParser.getImageDataAtSecond(time, true);
+      frame.src = BIFMouseTimeDisplay.BIFParser.getImageDataAtSecond(time, true);
     });
 
     // initialize the plugin
     videojs('player').ready(function () {
-      const request = new XMLHttpRequest();
-
-      request.open('GET', 'http://cdn.media.dma.disney.go.com/packaged/THMBVID/45/7e8e0b37-9235-4cc1-bb93-d235f3fc4145_1474036862600_30k.biff', true);
-      request.responseType = 'arraybuffer';
-
-      request.onload = (event) => {
-        console.warn('bif initialized');
-
-        bif = this.bif({
-          data: event.target.response,
-
-          onMouseMove(event, { image, time }) {
-            frame.src = image;
-            frameNumber.value = time;
-          }
-        });
-      };
-
-      request.send(null);
+      this.bif({
+        src: 'http://cdn.media.dma.disney.go.com/packaged/THMBVID/45/7e8e0b37-9235-4cc1-bb93-d235f3fc4145_1474036862600_30k.biff',
+      });
     });
   </script>
 </body>
