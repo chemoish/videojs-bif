@@ -4,6 +4,8 @@
 
 For more information on BIF, see https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support.
 
+![Example](https://github.com/chemoish/videojs-bif/blob/master/asset/img/example.png?raw=true)
+
 ## Getting Started
 
 #### Include
