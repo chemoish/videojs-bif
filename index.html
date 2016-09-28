@@ -107,7 +107,7 @@
     frameNumber.addEventListener('change', (event) => {
       const { BIFMouseTimeDisplay } = videojs('player').controlBar.progressControl.seekBar;
 
-      if (!BIFMouseTimeDisplay.BIFParser) {
+      if (!BIFMouseTimeDisplay.hasImages()) {
         return;
       }
 
