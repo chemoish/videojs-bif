@@ -1,74 +1,59 @@
 /* global videojs */
 
-import throttle from 'lodash/throttle';
-import { BIFParser } from './parser';
-import { getPointerPosition } from './util/dom';
-
-let bif;
+/* eslint-disable no-underscore-dangle */
 
 /**
- *
- *
- * @param {Object} options
- * @param {ArrayBuffer} options.data
- * @param {function(event)} options.onMouseMove
- * @param {Object} options.url
- *
+ * Register component.
  */
 
-export default class Bif {
-  constructor(player, options) {
-    this.player = player;
+import bifMouseTimeDisplay from './component/bif-mouse-time-display';
 
-    this.update(options);
+videojs.registerComponent('BIFMouseTimeDisplay', bifMouseTimeDisplay);
 
-    const { progressControl } = player.controlBar;
+/**
+ * Replace component implementation.
+ */
 
-    this.progressControl = progressControl;
+const VjsSeekBar = videojs.getComponent('SeekBar');
 
-    this.onMouseMove = throttle(this.onMouseMove.bind(this), 25);
+const vjsSeekBarChildren = VjsSeekBar.prototype.options_.children;
 
-    this.player.on(progressControl.el(), 'mousemove', this.onMouseMove);
+const mouseTimeDisplayIndex = vjsSeekBarChildren.indexOf('mouseTimeDisplay');
 
-    this.player.one('dispose', () => {
-      this.player.off(progressControl.el(), 'mousemove', this.onMouseMove);
-    });
-  }
+vjsSeekBarChildren.splice(mouseTimeDisplayIndex, 1, 'BIFMouseTimeDisplay');
 
-  onMouseMove(event) {
-    const position = getPointerPosition(
-      event,
-      this.progressControl.seekBar.el()
-    );
-
-    const time = position.x * this.player.duration();
-
-    this.options.onMouseMove(event, {
-      time,
-
-      image: this.bifParser.getImageDataAtSecond(time, true),
-    });
-  }
-
-  update(options) {
-    this.options = videojs.mergeOptions({}, this.options, options);
-
-    const { data } = options;
-
-    if (!(data instanceof ArrayBuffer)) {
-      throw new Error('Invalid data');
-    }
-
-    this.bifParser = new BIFParser(data);
-  }
-}
-
+/**
+ * Register plugin for easier component configurability.
+ *
+ * @param {Object} [options]
+ * @param {ArrayBuffer} options.data
+ * @param {function} options.createBIFImage
+ * @param {function} options.createBIFTime
+ * @param {function} options.template
+ * @param {string} options.src
+ * @param {boolean} options.wtf
+ */
 videojs.plugin('bif', function bifPlugin(options = {}) {
-  if (bif) {
-    bif.update(options);
-  } else {
-    bif = new Bif(this, options);
+  const { BIFMouseTimeDisplay } = this.player_.controlBar.progressControl.seekBar;
+
+  if (options.src) {
+    const request = new XMLHttpRequest();
+
+    request.open('GET', options.src, true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = (event) => {
+      BIFMouseTimeDisplay.render({
+        ...options,
+
+        data: event.target.response,
+      });
+    };
+
+    request.send(null);
+
+    return;
   }
 
-  return bif;
+  BIFMouseTimeDisplay.render(options);
 });

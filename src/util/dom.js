@@ -1,9 +1,21 @@
 /**
- *
- * SEE: https://github.com/videojs/video.js/blob/4f6cb03adde9ddf800e2ecf6fa87b07d436b74e8/src/js/utils/dom.js#L438
- *
+ * @typedef {Object} Point
+ * @property {number} x
+ * @property {number} y
  */
 
+/**
+ * @typedef {Object} Offset
+ * @property {number} left
+ * @property {number} top
+ */
+
+/**
+ * SEE: https://github.com/videojs/video.js/blob/4f6cb03adde9ddf800e2ecf6fa87b07d436b74e8/src/js/utils/dom.js#L438
+ *
+ * @param {HTMLElement} element
+ * @returns {Offset}
+ */
 export function getElementPosition(element) {
   let elementPosition = {
     left: 0,
@@ -26,6 +38,7 @@ export function getElementPosition(element) {
   const scrollTop = window.pageYOffset || body.scrollTop;
 
   // Android sometimes returns slightly off decimal values, so need to round
+
   return {
     left: Math.round(elementPosition.left + (scrollLeft - clientLeft)),
     top: Math.round(elementPosition.top + (scrollTop - clientTop)),
@@ -33,11 +46,12 @@ export function getElementPosition(element) {
 }
 
 /**
- *
  * SEE: https://github.com/videojs/video.js/blob/4f6cb03adde9ddf800e2ecf6fa87b07d436b74e8/src/js/utils/dom.js#L480
  *
+ * @param {Event} event
+ * @param {HTMLElement} element
+ * @returns {Point}
  */
-
 export function getPointerPosition(event, element) {
   const elementPosition = getElementPosition(element);
 
