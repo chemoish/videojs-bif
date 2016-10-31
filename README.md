@@ -30,7 +30,7 @@ videojs('player_id').bif({
 
 ## Options
 
-#### createBIFImage
+#### [createBIFImage]
 
 Type: `function`  
 Default:
@@ -47,7 +47,7 @@ createBIFImage() {
 
 Will be updated with new image previews—dependent on the current mouse over time in the video.
 
-#### createBIFTime
+#### [createBIFTime]
 
 Type: `function`  
 Default:
@@ -68,7 +68,7 @@ Will be updated with new time—dependent on the current mouse over time in the 
 
 Type: `ArrayBuffer`  
 
-#### template
+#### [template]
 
 Type: `function`  
 Default:
@@ -92,7 +92,7 @@ template() {
 
 Will be updated every time configuration changes—default implementation will show time immediately, then show images when available.
 
-#### url
+#### [src]
 
 Type: `string`  
 

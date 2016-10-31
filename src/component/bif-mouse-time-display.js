@@ -182,7 +182,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {function} [options.createBIFImage]
    * @param {function} [options.createBIFTime]
    * @param {function} [options.template]
-   * @param {string} [options.url]
    */
   render(options) {
     this.configure(options);

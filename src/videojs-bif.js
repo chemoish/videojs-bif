@@ -27,10 +27,10 @@ vjsSeekBarChildren.splice(mouseTimeDisplayIndex, 1, 'BIFMouseTimeDisplay');
  *
  * @param {Object} [options]
  * @param {ArrayBuffer} options.data
- * @param {function} options.createBIFImage
- * @param {function} options.createBIFTime
- * @param {function} options.template
- * @param {string} options.src
+ * @param {function} [options.createBIFImage]
+ * @param {function} [options.createBIFTime]
+ * @param {function} [options.template]
+ * @param {string} [options.src]
  */
 videojs.plugin('bif', function bifPlugin(options = {}) {
   const { BIFMouseTimeDisplay } = this.player_.controlBar.progressControl.seekBar;
