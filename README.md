@@ -96,13 +96,6 @@ Will be updated every time configuration changes—default implementation will s
 
 Type: `string`  
 
-#### wtf
-
-Type: `boolean`  
-Default: `true`
-
-Currently defaulted to true do to off specification implementation of BIF. _Should_ work if set to false and respects absolute positioning.
-
 ## Contributing + Example
 
 ```bash
