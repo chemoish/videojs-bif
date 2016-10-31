@@ -10,7 +10,6 @@ export const VERSION_OFFSET = 8;
 // Metadata
 
 export const BIF_INDEX_ENTRY_LENGTH = 8;
-export const BIF_TIMESTAMP_INTERVAL = 2;
 
 // Magic Number
 // SEE: https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support#TrickModeSupport-MagicNumber
@@ -102,40 +101,16 @@ export class BIFParser {
    * Return image data for a specific frame of a movie.
    *
    * @param {number} second
-   * @param {boolean} wtf if in `wtf` mode and doesn't follow BIF specification
    * @returns {string} imageData
    */
-  getImageDataAtSecond(second, wtf = false) {
-    // since frames are defined at an interval of BIF_TIMESTAMP_INTERVAL,
+  getImageDataAtSecond(second) {
+    // since frames are defined at an interval of `this.framewiseSeparation`,
     // we need to convert the time into an appropriate frame number.
-    const frameNumber = Math.ceil(second / BIF_TIMESTAMP_INTERVAL);
+    const frameNumber = Math.ceil((second * 1000) / this.framewiseSeparation);
 
     const frame = this.bifIndex[frameNumber];
 
-    let offset;
-
-    // WTF: dragons—remove me when possible (*should* work when files are fixed and wtf = false)
-    // SEE: https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support#TrickModeSupport-Datasection
-    //
-    // the offset is supposed to be absolute, the start of the frame's image data
-    // however, it is relative from the beginning of the file, so we must do that calculation, the
-    // `wtf` implementation does not contain any data between the index and the start of the first
-    // image, even though the specification says otherwise
-    if (wtf) {
-      offset = (
-        // start of BIF index
-        BIF_INDEX_OFFSET +
-
-        // total size of BIF index
-        ((this.numberOfBIFImages + 1) * BIF_INDEX_ENTRY_LENGTH) +
-
-        // offset of the current frame from the end of the BIF index
-        (frame.offset - this.bifIndex[0].offset)
-      );
-    } else {
-      // things are cool and we are absolute
-      offset = frame.offset;
-    }
+    const { offset } = frame;
 
     return `data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null,
       new Uint8Array(this.arrayBuffer.slice(offset, offset + frame.length))

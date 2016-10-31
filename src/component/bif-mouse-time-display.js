@@ -9,7 +9,6 @@ const defaults = {
   createBIFImage: Function.prototype,
   createBIFTime: Function.prototype,
   template: Function.prototype,
-  wtf: true,
 };
 
 const VjsMouseTimeDisplay = videojs.getComponent('MouseTimeDisplay');
@@ -36,7 +35,6 @@ const VjsMouseTimeDisplay = videojs.getComponent('MouseTimeDisplay');
  * @param {function} [options.createBIFImage]
  * @param {function} [options.createBIFTime]
  * @param {function} [options.template]
- * @param {boolean} [options.wtf=true]
  */
 export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
   /**
@@ -98,7 +96,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {function} [options.createBIFImage]
    * @param {function} [options.createBIFTime]
    * @param {function} [options.template]
-   * @param {boolean} [options.wtf=true]
    */
   configure(options) {
     this.options_ = videojs.mergeOptions(defaults, this.options_, options);
@@ -122,7 +119,7 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
     let image;
 
     if (this.hasImages()) {
-      image = this.BIFParser.getImageDataAtSecond(time, this.options_.wtf);
+      image = this.BIFParser.getImageDataAtSecond(time);
     }
 
     return image;
@@ -186,7 +183,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * @param {function} [options.createBIFTime]
    * @param {function} [options.template]
    * @param {string} [options.url]
-   * @param {boolean} [options.wtf=true]
    */
   render(options) {
     this.configure(options);

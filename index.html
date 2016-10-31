@@ -113,13 +113,13 @@
 
       const time = event.target.value;
 
-      frame.src = BIFMouseTimeDisplay.BIFParser.getImageDataAtSecond(time, true);
+      frame.src = BIFMouseTimeDisplay.BIFParser.getImageDataAtSecond(time);
     });
 
     // initialize the plugin
     videojs('player').ready(function () {
       this.bif({
-        src: 'http://cdn.media.dma.disney.go.com/packaged/THMBVID/45/7e8e0b37-9235-4cc1-bb93-d235f3fc4145_1474036862600_30k.biff',
+        src: 'https://dmadisney.akamaized.net/extra_unencrypted/bif/02/ABC123_1464745270159_3000k_hd_video-SD.bif',
       });
     });
   </script>
