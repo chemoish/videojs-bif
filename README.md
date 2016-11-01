@@ -96,6 +96,8 @@ Will be updated every time configuration changes—default implementation will s
 
 Type: `string`  
 
+The source must abide by the [BIF](https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support) format.
+
 ## Contributing + Example
 
 ```bash
