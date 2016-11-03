@@ -188,7 +188,7 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
 
     // create BIF image element
 
-    const BIFImage = this.options_.createBIFImage();
+    const BIFImage = this.options_.createBIFImage.apply(this);
 
     if (BIFImage instanceof HTMLElement) {
       this.BIFImage = BIFImage;
@@ -198,7 +198,7 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
 
     // create BIF time element
 
-    const BIFTime = this.options_.createBIFTime();
+    const BIFTime = this.options_.createBIFTime.apply(this);
 
     if (BIFTime instanceof HTMLElement) {
       this.BIFTime = BIFTime;
@@ -208,7 +208,7 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
 
     // create BIF template element
 
-    let template = this.options_.template();
+    let template = this.options_.template.apply(this);
 
     if (!(template instanceof HTMLElement)) {
       template = this.template();
