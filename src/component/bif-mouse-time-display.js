@@ -159,7 +159,6 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
     // updates the template with new information
     this.updateTemplate({
       image,
-      time,
     });
   }
 
@@ -246,15 +245,12 @@ export default class BIFMouseTimeDisplay extends VjsMouseTimeDisplay {
    * Update template elements with new content generated on mouse move.
    *
    * @param {Object} options.image
-   * @param {Object} options.time
    */
-  updateTemplate({ image, time }) {
+  updateTemplate({ image }) {
     if (image) {
       this.BIFImage.src = image;
     }
 
-    if (time) {
-      this.BIFTime.innerHTML = this.el().getAttribute('data-current-time');
-    }
+    this.BIFTime.innerHTML = this.el().getAttribute('data-current-time');
   }
 }
