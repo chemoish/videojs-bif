@@ -50,8 +50,6 @@ videojs.plugin('bif', function bifPlugin(options = {}) {
     };
 
     request.send(null);
-
-    return;
   }
 
   BIFMouseTimeDisplay.render(options);
