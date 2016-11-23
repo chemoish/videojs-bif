@@ -104,16 +104,20 @@ export class BIFParser {
    * @returns {string} imageData
    */
   getImageDataAtSecond(second) {
+    const image = 'data:image/jpeg;base64,';
+
     // since frames are defined at an interval of `this.framewiseSeparation`,
     // we need to convert the time into an appropriate frame number.
     const frameNumber = Math.ceil((second * 1000) / this.framewiseSeparation);
 
     const frame = this.bifIndex[frameNumber];
 
-    const { offset } = frame;
+    if (!frame) {
+      return image;
+    }
 
-    return `data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null,
-      new Uint8Array(this.arrayBuffer.slice(offset, offset + frame.length))
+    return `${image}${btoa(String.fromCharCode.apply(null,
+      new Uint8Array(this.arrayBuffer.slice(frame.offset, frame.offset + frame.length))
     ))}`;
   }
 
