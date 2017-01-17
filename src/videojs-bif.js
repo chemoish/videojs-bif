@@ -42,6 +42,10 @@ videojs.plugin('bif', function bifPlugin(options = {}) {
     request.responseType = 'arraybuffer';
 
     request.onload = (event) => {
+      if (event.target.status !== 200) {
+        return;
+      }
+
       BIFMouseTimeDisplay.render({
         ...options,
 
