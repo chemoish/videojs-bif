@@ -25,22 +25,45 @@ export const MAGIC_NUMBER = new Uint8Array([
 ]);
 
 /**
+ * Validate the file identifier against the magic number.
+ *
+ * @returns {boolean} isValid
+ */
+function validate(magicNumber) {
+  let isValid = true;
+
+  MAGIC_NUMBER.forEach((byte, i) => {
+    if (byte !== magicNumber[i]) {
+      isValid = false;
+
+      return;
+    }
+  });
+
+  return isValid;
+}
+
+/**
  * Parsing and read BIF file format.
  *
  * @param {ArrayBuffer} arrayBuffer
  */
 export class BIFParser {
   constructor(arrayBuffer) {
+    // Magic Number
+    // SEE: https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support#TrickModeSupport-MagicNumber
+    const magicNumber = new Uint8Array(arrayBuffer).slice(0, 8);
+
+    if (!validate(magicNumber)) {
+      throw new Error('Invalid BIF file.');
+    }
+
     this.arrayBuffer = arrayBuffer;
     this.data = new jDataView(arrayBuffer); // eslint-disable-line new-cap
 
     // Framewise Separation
     // SEE: https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support#TrickModeSupport-FramewiseSeparation
     this.framewiseSeparation = this.data.getUint32(FRAMEWISE_SEPARATION_OFFSET, true) || 1000;
-
-    // Magic Number
-    // SEE: https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support#TrickModeSupport-MagicNumber
-    this.magicNumber = new Uint8Array(arrayBuffer).slice(0, 8);
 
     // Number of BIF images
     // SEE: https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support#TrickModeSupport-NumberofBIFimages
@@ -49,10 +72,6 @@ export class BIFParser {
     // Version
     // SEE: https://sdkdocs.roku.com/display/sdkdoc/Trick+Mode+Support#TrickModeSupport-Version
     this.version = this.data.getUint32(VERSION_OFFSET, true);
-
-    if (!this.validate()) {
-      throw new Error('Invalid BIF file.');
-    }
 
     this.bifIndex = this.generateBIFIndex(true);
   }
@@ -119,24 +138,5 @@ export class BIFParser {
     return `${image}${btoa(String.fromCharCode.apply(null,
       new Uint8Array(this.arrayBuffer.slice(frame.offset, frame.offset + frame.length))
     ))}`;
-  }
-
-  /**
-   * Validate the file identifier against the magic number.
-   *
-   * @returns {boolean} isValid
-   */
-  validate() {
-    let isValid = true;
-
-    MAGIC_NUMBER.forEach((byte, i) => {
-      if (byte !== this.magicNumber[i]) {
-        isValid = false;
-
-        return;
-      }
-    });
-
-    return isValid;
   }
 }
