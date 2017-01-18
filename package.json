@@ -1,6 +1,6 @@
 {
   "name": "videojs-bif",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Video.js plugin for supporting BIF.",
   "main": "./dist/videojs.bif.min.js",
   "scripts": {
