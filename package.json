@@ -2,7 +2,7 @@
   "name": "videojs-bif",
   "version": "1.0.4",
   "description": "Video.js plugin for supporting BIF.",
-  "main": "index.js",
+  "main": "./dist/videojs.bif.min.js",
   "scripts": {
     "build": "npm run build:production && npm run build:development",
     "build:development": "webpack --config webpack/webpack.config",
