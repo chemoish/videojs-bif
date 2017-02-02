@@ -127,7 +127,7 @@ export class BIFParser {
 
     // since frames are defined at an interval of `this.framewiseSeparation`,
     // we need to convert the time into an appropriate frame number.
-    const frameNumber = Math.ceil((second * 1000) / this.framewiseSeparation);
+    const frameNumber = Math.floor(second / (this.framewiseSeparation / 1000));
 
     const frame = this.bifIndex[frameNumber];
 
